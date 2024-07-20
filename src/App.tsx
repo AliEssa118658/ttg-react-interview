@@ -1,55 +1,50 @@
-import * as React from 'react';
-
-import { createBrowserHistory } from 'history';
-import { Router, Switch, Route } from 'react-router-dom';
-import { MuiThemeProvider, makeStyles, createStyles } from '@material-ui/core/styles';
-import theme from './assets/jss/theme';
-import { Box } from '@material-ui/core';
-import LoadingPage from './views/components/LoadingPage';
-import Todo from './views/Todo';
-
-import packageJson from '../package.json';
-import logo from './assets/img/logo.png';
-
-const history = createBrowserHistory({ basename: '.' });
-
+import React, { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import AddTodo from './views/Todo/components/AddTodo';
+import TaskList from './views/Todo/components/TaskList';
+import store from './reducers/stores';
+import { setTodos, addTodo } from './views/Todo/actions';
+import Logo from './assets/img/logo.png'
 const useStyles = makeStyles(theme =>
   createStyles({
-    root: {},
-    logo: {
-      width: 120,
+    root: {
+      padding: theme.spacing(2),
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.spacing(2),
     },
   })
 );
 
 const App = () => {
   const classes = useStyles();
-  React.useEffect(() => {
-    console.log('Current Version ', packageJson.version);
-  }, []);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTodos());
+  }, [dispatch]);
+
+  const handleAddTask = (title: string) => {
+    dispatch(addTodo(title));
+  };
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <React.Suspense fallback={<LoadingPage />}>
-        <Router history={history}>
-          <Box display="flex" flexDirection="column" minHeight="100vh">
-            {/* Header Component can be added here*/}
-            <Box display="flex" alignContent="center">
-              <img className={classes.logo} alt="TabTabGo Logo" />
-            </Box>
-            <Box display="flex" flex={1} justifyContent="center">
-              <Switch>
-                <Route path="/">
-                  <Todo />
-                </Route>
-              </Switch>
-            </Box>
-            {/* Footer Component can be added here*/}
-          </Box>
-        </Router>
-      </React.Suspense>
-    </MuiThemeProvider>
+    <div className="flex-col">
+      <img src={Logo} alt="Logo" className='logo' />
+      <AddTodo onAddTask={handleAddTask} />
+      <TaskList />
+    </div>
   );
 };
 
-export default App;
+const RootApp = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default RootApp;

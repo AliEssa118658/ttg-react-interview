@@ -1,7 +1,7 @@
 import { Task } from '../types/Task';
 
 class TaskService {
-  task_key = 'TASkS';
+  task_key = 'TASKS';
 
   constructor() {}
 
@@ -39,6 +39,15 @@ class TaskService {
       tasks.splice(index, 1);
     }
     this.commit(tasks);
+  }
+
+  toggleTaskCompletion(id: number) {
+    var tasks = this.loadFromStorage();
+    var index = tasks.findIndex(t => t.id === id);
+    if (index > -1) {
+      tasks[index].completed = !tasks[index].completed;
+      this.commit(tasks);
+    }
   }
 }
 

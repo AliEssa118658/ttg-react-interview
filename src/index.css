@@ -6,7 +6,65 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+.table-head{
+  background-color: #2cbbd6;
+}
+.table-head th{
+  font-size: 24px;
+  color: rgb(91 91 91 / 87%);
+  font-weight: 600;
+}
+.table-body td{
+  font-size: 20px;
+  color: rgb(91 91 91 / 87%);
+  font-weight: 600;
+}
+.flex-col{
+display: flex;
+flex-direction: column;
+}
+.logo{
+  margin: auto;
+  width: 500px;
+}
+.input-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.input-div .MuiFormControl-root{
+  width: 90% !important;
+  text-align: center;
+}
+.mt-2{
+  margin-top: -11px !important;
+}
+.action{
+  display: flex !important;
+  gap: 2.5rem;
+  
+}
+.curser{
+  cursor: pointer;
+}
+.input-div .MuiFormControl-root input{
+  /* height: 40px; */
+ /* scale: 2; */
+  font-size: 21px;
+}
 
+.input-div button{
+  width: 30% !important;
+  height: 43px;
+  margin-top: 0.2rem;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
